@@ -147,13 +147,7 @@
       document.getElementById('submit').addEventListener('click',function() {
         // Get the value from the editor
         var resultat = editor.getValue();
-        $.ajax({
-          url: '/datas',
-          type: 'POST',
-          ContentType:'application/json',
-          data: resultat
-        })
-
+        $.post('/datas',{ saisie:JSON.stringify(resultat) },function(){})
       });
     </script>
   </body>
