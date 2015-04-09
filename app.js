@@ -30,11 +30,13 @@ app.get('/bazar', function (req, res) {
             "userlist" : docs
         });
     });
-
-
 });
-/*
+
 app.get('/remontee', function (req, res) { 
  res.render('remontee')
 })
-*/
+
+app.post('/datas',function(req,res ){
+  console.log(req.params.datas)
+})
+
