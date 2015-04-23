@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Basic JSON Editor Example</title>
+     <script src="/js/jquery-2.1.3.js"></script>
+    <script src="/js/jsoneditor.js"></script>
+  </head>
+  <body>
+    <h1>Basic JSON Editor Example</h1>
+    
+    <div id='editor_holder'></div>
+     <div><input id="collection"></input></div>
+    <button id='submit'>Submit (console.log)</button>
+    
+    <script>
+      // Initialize the editor with a JSON schema
+      var editor = new JSONEditor(document.getElementById('editor_holder'),
+        { "schema":{
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "id": "http://jsonschema.net",
+            "type": "object",
+            "properties": 
+            {
+              "titre": 
+              {
+                "id": "http://jsonschema.net/titre",
+                "type": "string"
+              },
+              "question": 
+              {
+                "id": "http://jsonschema.net/question",
+                "type": "string"
+              },
+              "reponses": 
+              {
+                "id": "http://jsonschema.net/reponses",
+                "type": "array",
+                "items": 
+                [
+                  {
+                    "id": "http://jsonschema.net/reponses/0",
+                    "type": "object",
+                    "properties": 
+                    {
+                      "id": 
+                      {
+                        "id": "http://jsonschema.net/reponses/0/id",
+                        "type": "string"
+                      },
+                      "rep": 
+                      {
+                        "id": "http://jsonschema.net/reponses/0/rep",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "id": "http://jsonschema.net/reponses/1",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/reponses/1/id",
+                        "type": "string"
+                      },
+                      "rep": {
+                        "id": "http://jsonschema.net/reponses/1/rep",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "id": "http://jsonschema.net/reponses/2",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/reponses/2/id",
+                        "type": "string"
+                      },
+                      "rep": {
+                        "id": "http://jsonschema.net/reponses/2/rep",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "id": "http://jsonschema.net/reponses/3",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/reponses/3/id",
+                        "type": "string"
+                      },
+                      "rep": {
+                        "id": "http://jsonschema.net/reponses/3/rep",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "id": "http://jsonschema.net/reponses/4",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/reponses/4/id",
+                        "type": "string"
+                      },
+                      "rep": {
+                        "id": "http://jsonschema.net/reponses/4/rep",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "id": "http://jsonschema.net/reponses/5",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/reponses/5/id",
+                        "type": "string"
+                      },
+                      "rep": {
+                        "id": "http://jsonschema.net/reponses/5/rep",
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              },
+              "defaultVote": 
+              {
+                "id": "http://jsonschema.net/defaultVote",
+                "type": "integer"
+              },
+              "echelle": 
+              {
+                "id": "http://jsonschema.net/echelle",
+                "type": "integer"
+              }
+            },
+            "required": 
+            [
+              "titre",
+              "question",
+              "reponses",
+              "defaultVote",
+              "echelle"
+            ]
+          }
+     , "template":"ejs"});
+      
+      // Hook up the submit button to log to the console
+      document.getElementById('submit').addEventListener('click',function() {
+      
+        // Get the value from the editor
+        console.log(editor.getValue());
+
+           // Get the value from the editor
+        var resultat = editor.getValue();
+        var nom = $("#collection").val();
+        $.post('/datas',{ nomCollection:nom, saisie:JSON.stringify(resultat) },function(){})
+        // sauvegarder dans une base de données
+        // mongodb
+
+      });
+    </script>
+  </body>
+</html>

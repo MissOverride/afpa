@@ -7,10 +7,11 @@
     <script src="/js/jsoneditor.js"></script>
   </head>
   <body>
-    <h1>Basic JSON Editor Example</h1>
+    <h1><%= titre %></h1>
     
     <div id='editor_holder'></div>
-    <button id='submit'>Submit (console.log)</button>
+    <div><input id="collection"></input></div>
+    <button id='submit'>Submit </button>
     
     <script>
       // Initialize the editor with a JSON schema
@@ -147,7 +148,8 @@
       document.getElementById('submit').addEventListener('click',function() {
         // Get the value from the editor
         var resultat = editor.getValue();
-        $.post('/datas',{ saisie:JSON.stringify(resultat) },function(){})
+        var nom = $("#collection").val();
+        $.post('/datas',{ nomCollection:nom, saisie:JSON.stringify(resultat) },function(){})
       });
     </script>
   </body>

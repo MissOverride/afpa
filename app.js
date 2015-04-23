@@ -22,23 +22,22 @@ app.use(morgan("dev"));
 app.use(serveStatic(path.join(__dirname,'.', "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/bazar', function (req, res) {
-    var collection = db.get('bazar');
-    collection.find({},{},function(e,docs){
-      console.log(docs)
-        res.render('userlist', {
-            "userlist" : docs
-        });
-    });
-});
-
 app.get('/remontee', function (req, res) { 
- res.render('remontee')
+ res.render('remontee',{titre:"tri1"})
+})
+
+app.get('/curseur', function (req, res) { 
+ res.render('curseur',{titre:"curseur1"})
 })
 
 app.post('/datas',function(req,res){
   console.log(req.body.saisie);
-  var collection = db.get('tri1')
+  var collection = db.get(req.body.nomCollection)
   collection.insert(JSON.parse(req.body.saisie))
 })
 
+app.get('/affiche/:formulaire/:collection',function(req,res){
+  // lire la base de donnee
+  var collection = db.get(req.params.collection)
+  res.render('curseur',{collection:collection})
+})
