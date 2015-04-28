@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Basic JSON Editor Example</title>
+    <script src="/js/jquery-2.1.3.js"></script>
+    <script src="/js/jsoneditor.js"></script>
+  </head>
+  <body>
+    <h1><%= titre %></h1>
+    
+    <div id='editor_holder'></div>
+    <button id='submit'>Submit (console.log)</button>
+    
+    <script>
+      // Initialize the editor with a JSON schema
+      var editor = new JSONEditor(document.getElementById('editor_holder'),
+     { "schema":{
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "id": "http://jsonschema.net",
+          "type": "object",
+          "properties": {
+            "titre": {
+              "id": "http://jsonschema.net/titre",
+              "type": "string"
+            },
+            "sousTitre": {
+              "id": "http://jsonschema.net/sousTitre",
+              "type": "string"
+            },
+            "answers": {
+              "id": "http://jsonschema.net/answers",
+              "type": "array",
+              "items": [
+                {
+                  "id": "http://jsonschema.net/answers/0",
+                  "type": "string"
+                },
+                {
+                  "id": "http://jsonschema.net/answers/1",
+                  "type": "string"
+                },
+                {
+                  "id": "http://jsonschema.net/answers/2",
+                  "type": "string"
+                },
+                {
+                  "id": "http://jsonschema.net/answers/3",
+                  "type": "string"
+                },
+                {
+                  "id": "http://jsonschema.net/answers/4",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "required": [
+            "titre",
+            "sousTitre",
+            "answers"
+          ]
+        }
+      });
+      
+      // Hook up the submit button to log to the console
+      document.getElementById('submit').addEventListener('click',function() {
+        // Get the value from the editor
+        var resultat = editor.getValue();
+        var nom = $("#collection").val();
+        $.post('/datas',{ nomCollection:nom, saisie:JSON.stringify(resultat) },function(){})
+      });
+    </script>
+  </body>
+</html>

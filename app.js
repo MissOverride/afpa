@@ -23,11 +23,19 @@ app.use(serveStatic(path.join(__dirname,'.', "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/remontee', function (req, res) { 
- res.render('remontee',{titre:"tri1"})
+ res.render('remontee',{titre:"remontee1"})
 })
 
 app.get('/curseur', function (req, res) { 
  res.render('curseur',{titre:"curseur1"})
+})
+
+app.get('/tri', function (req, res) { 
+ res.render('tri',{titre:"tri1"})
+})
+
+app.get('/vote', function (req, res) { 
+ res.render('vote',{titre:"vote1"})
 })
 
 app.post('/datas',function(req,res){
