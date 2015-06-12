@@ -1,5 +1,7 @@
 "use strict";
 
+// modules installés 
+
 var util = require('util');
 var path = require("path");
 var express = require("express");
@@ -14,6 +16,7 @@ var db = monk('localhost:27017/afpa');
 
 var app = module.exports = express();
 
+//creation du port d'ecoute (ici 3000) et du chemin 
 app.enable("trust proxy");
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname,'.', "views"));
@@ -22,6 +25,8 @@ app.use(morgan("dev"));
 app.use(serveStatic(path.join(__dirname,'.', "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// ds route /remontee, on cree une fonction callback qui est 
+// appelé lorsque quelqu'un fait appel à cette route
 app.get('/remontee', function (req, res) { 
  res.render('remontee',{titre:"remontee1"})
 })
@@ -41,11 +46,18 @@ app.get('/vote', function (req, res) {
 app.post('/datas',function(req,res){
   console.log(req.body.saisie);
   var collection = db.get(req.body.nomCollection)
-  collection.insert(JSON.parse(req.body.saisie))
+  collection.insert(JSON.parse(req.body.saisie),function(err,doc){
+  	if (err) console.log(err) ;
+  })
 })
 
 app.get('/affiche/:formulaire/:collection',function(req,res){
   // lire la base de donnee
   var collection = db.get(req.params.collection)
-  res.render('curseur',{collection:collection})
+   collection.find({},{},function(e,docs){
+   	console.log(e)
+   	console.log('DOCS',docs)
+  		//res.render('curseur',{collection:docs}) 	
+   })
+  
 })
